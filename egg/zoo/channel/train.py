@@ -5,6 +5,7 @@
 
 import argparse
 import json
+from datetime import datetime as dt
 
 import numpy as np
 import torch.nn.functional as F
@@ -194,6 +195,8 @@ def dump(game, n_features, device, gs_mode):
 
 
 def main(params):
+    t1 = dt.now()
+
     opts = get_params(params)
     print(opts, flush=True)
 
@@ -314,6 +317,9 @@ def main(params):
     game.logging_strategy = LoggingStrategy.maximal()  # now log everything
     dump(trainer.game, opts.n_features, device, False)
     core.close()
+    
+    t2 = dt.now()
+    print("temps d'exécution : ", t2-t1)
 
 
 if __name__ == "__main__":
