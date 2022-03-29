@@ -16,6 +16,8 @@ from egg.core.interaction import LoggingStrategy
 from egg.zoo.channel.archs import Receiver, Sender
 from egg.zoo.channel.features import OneHotLoader, UniformLoader
 
+from datetime import datetime as dt
+
 
 def get_params(params):
     parser = argparse.ArgumentParser()
@@ -194,6 +196,9 @@ def dump(game, n_features, device, gs_mode):
 
 
 def main(params):
+    
+    t1 = dt.now()
+    
     opts = get_params(params)
     print(opts, flush=True)
 
@@ -314,7 +319,8 @@ def main(params):
     game.logging_strategy = LoggingStrategy.maximal()  # now log everything
     dump(trainer.game, opts.n_features, device, False)
     core.close()
-
+    t2 = dt.now()
+    print("temps d'exécution : ", t2-t1)
 
 if __name__ == "__main__":
     import sys
